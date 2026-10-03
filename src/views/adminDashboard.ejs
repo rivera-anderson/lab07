@@ -1,0 +1,53 @@
+<%- include('partials/header') %>
+<div class="elegant-container container">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="elegant-title">Panel del <span>Curador</span></h2>
+      <table class="elegant-table responsive-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Fecha Registro</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const decoded = checkAuth(['admin']);
+    if (decoded) {
+      try {
+        const res = await fetch('/api/users', {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const users = await res.json();
+        if (res.ok) {
+          const tbody = document.getElementById('usersTableBody');
+          users.forEach(u => {
+            const tr = document.createElement('tr');
+            const date = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A';
+            const roles = u.roles ? u.roles.map(r => r.name).join(', ') : 'N/A';
+            tr.innerHTML = `
+              <td>${u._id}</td>
+              <td>${u.name} ${u.lastName || ''}</td>
+              <td>${u.email}</td>
+              <td>${roles}</td>
+              <td>${date}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (e) {
+        M.toast({html: 'Error cargando usuarios', classes: 'red'});
+      }
+    }
+  });
+</script>
+<%- include('partials/footer') %>

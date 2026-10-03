@@ -1,0 +1,24 @@
+  </div>
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Configurar navbar según token
+    document.addEventListener("DOMContentLoaded", function() {
+      const token = getToken();
+      if (token) {
+        const decoded = parseJwt(token);
+        if (decoded && decoded.exp * 1000 > Date.now()) {
+          document.getElementById("nav-profile").style.display = "block";
+          document.getElementById("nav-logout").style.display = "block";
+          if (decoded.roles.includes("admin")) {
+            document.getElementById("nav-admin").style.display = "block";
+          } else {
+            document.getElementById("nav-dashboard").style.display = "block";
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

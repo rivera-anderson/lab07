@@ -1,0 +1,93 @@
+<%- include('partials/header') %>
+
+<div class="museum-hero">
+  <h1>OBRAS MAESTRAS</h1>
+  <p>Nuestra exposición permanente presenta los hallazgos paleontológicos y restos prehistóricos más asombrosos del mundo, preservados para la humanidad.</p>
+  <button class="btn btn-white" style="margin-top: 10px;">ADQUIRIR ENTRADA</button>
+</div>
+
+<div class="elegant-container">
+  <div class="elegant-title-wrapper">
+    <span>[ COLECCIONES ]</span>
+    <h2 class="elegant-title" id="welcomeMessage" style="font-size: 2rem; margin-top: 10px;">Explora el Pasado</h2>
+  </div>
+
+  <div class="row">
+    <!-- Exhibit 1 -->
+    <div class="col s12 m6 l4" style="margin-bottom: 30px;">
+      <div class="exhibit-card">
+        <div class="exhibit-img-container">
+          <img src="https://images.unsplash.com/photo-1518991669955-9c7e78ec80ca?q=80&w=800" alt="T-Rex">
+        </div>
+        <div class="exhibit-content">
+          <div class="exhibit-meta">
+            <span>Periodo<br>Cretácico</span>
+            <span class="exhibit-tag">Permanente</span>
+          </div>
+          <h3 class="exhibit-title">El Rey de los Tiranos: Esqueleto Completo de T-Rex</h3>
+          <div class="exhibit-location">
+            <i class="material-icons">location_on</i> Pabellón Paleontológico
+          </div>
+          <button class="btn btn-museum">VER DETALLES</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Exhibit 2 -->
+    <div class="col s12 m6 l4" style="margin-bottom: 30px;">
+      <div class="exhibit-card">
+        <div class="exhibit-img-container">
+          <img src="https://images.unsplash.com/photo-1616712134411-6b6ae89bc3ba?q=80&w=800" alt="Fósil">
+        </div>
+        <div class="exhibit-content">
+          <div class="exhibit-meta">
+            <span>Periodo<br>Jurásico</span>
+            <span class="exhibit-tag">Novedad</span>
+          </div>
+          <h3 class="exhibit-title">Vestigios Gigantes: Fósiles Ancestrales de Estegosaurio</h3>
+          <div class="exhibit-location">
+            <i class="material-icons">location_on</i> Salón de la Evolución
+          </div>
+          <button class="btn btn-museum">VER DETALLES</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Exhibit 3 -->
+    <div class="col s12 m6 l4" style="margin-bottom: 30px;">
+      <div class="exhibit-card">
+        <div class="exhibit-img-container">
+          <img src="https://images.unsplash.com/photo-1579728469375-7bc093dc724b?q=80&w=800" alt="Dino Skull">
+        </div>
+        <div class="exhibit-content">
+          <div class="exhibit-meta">
+            <span>Era<br>Mesozoica</span>
+            <span class="exhibit-tag">Temporal</span>
+          </div>
+          <h3 class="exhibit-title">Depredadores de las Sombras: Cráneos de Raptor</h3>
+          <div class="exhibit-location">
+            <i class="material-icons">location_on</i> Sala de Depredadores
+          </div>
+          <button class="btn btn-museum">VER DETALLES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const decoded = checkAuth(['user', 'admin']);
+    if (decoded) {
+      try {
+        const res = await fetch('/api/users/me', {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('welcomeMessage').innerText = `Bienvenido investigador, ${data.name}`;
+        }
+      } catch (e) {}
+    }
+  });
+</script>
+<%- include('partials/footer') %>

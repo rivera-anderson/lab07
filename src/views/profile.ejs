@@ -1,0 +1,113 @@
+<%- include('partials/header') %>
+<div class="elegant-container container">
+  <div class="row">
+    <div class="col s12 m8 offset-m2">
+      <h2 class="elegant-title center-align">Mi <span>Perfil</span></h2>
+      <div class="elegant-light-card">
+        <div class="card-content">
+          <form id="profileForm">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="name" type="text" required>
+                <label class="active" for="name">Nombre</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="lastName" type="text" required>
+                <label class="active" for="lastName">Apellido</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="email" type="email" disabled>
+                <label class="active" for="email">Email</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="phoneNumber" type="text" required>
+                <label class="active" for="phoneNumber">Teléfono</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="birthdate" type="date" required>
+                <label class="active" for="birthdate">Fecha de Nacimiento</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="url_profile" type="text">
+                <label class="active" for="url_profile">URL Foto Perfil</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="address" type="text">
+                <label class="active" for="address">Dirección</label>
+              </div>
+            </div>
+            <button class="btn btn-museum w-100" type="submit" style="width: 100%; margin-top: 20px;">Actualizar Perfil &rarr;</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const decoded = checkAuth(['user', 'admin']);
+    if (decoded) {
+      try {
+        const res = await fetch('/api/users/me', {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('name').value = data.name || '';
+          document.getElementById('lastName').value = data.lastName || '';
+          document.getElementById('email').value = data.email || '';
+          document.getElementById('phoneNumber').value = data.phoneNumber || '';
+          if(data.birthdate) {
+            document.getElementById('birthdate').value = data.birthdate.split('T')[0];
+          }
+          document.getElementById('url_profile').value = data.url_profile || '';
+          document.getElementById('address').value = data.address || '';
+          
+          // Fix label overlap bug
+          setTimeout(() => {
+            M.updateTextFields();
+          }, 100);
+        }
+      } catch (e) {
+        M.toast({html: 'Error cargando perfil', classes: 'red'});
+      }
+    }
+  });
+
+  document.getElementById('profileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById('name').value,
+      lastName: document.getElementById('lastName').value,
+      phoneNumber: document.getElementById('phoneNumber').value,
+      birthdate: document.getElementById('birthdate').value,
+      url_profile: document.getElementById('url_profile').value,
+      address: document.getElementById('address').value
+    };
+    try {
+      const res = await fetch('/api/users/me', {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        M.toast({html: 'Perfil actualizado', classes: 'green'});
+      } else {
+        M.toast({html: data.message || 'Error actualizando', classes: 'red'});
+      }
+    } catch (err) {
+      M.toast({html: 'Error de red', classes: 'red'});
+    }
+  });
+</script>
+<%- include('partials/footer') %>
