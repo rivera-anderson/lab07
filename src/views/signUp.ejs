@@ -25,6 +25,15 @@
               <div class="input-field col s12 m6">
                 <input id="password" type="password" required>
                 <label for="password">Contraseña</label>
+                <div class="password-hints">
+                  <p class="hint-title">La contraseña debe contener:</p>
+                  <ul>
+                    <li id="hint-length"><i class="material-icons tiny">close</i> Mínimo 8 caracteres</li>
+                    <li id="hint-upper"><i class="material-icons tiny">close</i> Al menos 1 mayúscula</li>
+                    <li id="hint-digit"><i class="material-icons tiny">close</i> Al menos 1 dígito</li>
+                    <li id="hint-special"><i class="material-icons tiny">close</i> Al menos 1 carácter especial (# $ % & * @)</li>
+                  </ul>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -48,13 +57,39 @@
   </div>
 </div>
 <script>
+  // Live password validation hints
+  const passwordInput = document.getElementById('password');
+  passwordInput.addEventListener('input', function() {
+    const val = this.value;
+    validateHint('hint-length', val.length >= 8);
+    validateHint('hint-upper', /[A-Z]/.test(val));
+    validateHint('hint-digit', /[0-9]/.test(val));
+    validateHint('hint-special', /[#$%&*@]/.test(val));
+  });
+
+  function validateHint(id, isValid) {
+    const el = document.getElementById(id);
+    const icon = el.querySelector('i');
+    if (isValid) {
+      el.classList.add('valid');
+      el.classList.remove('invalid');
+      icon.textContent = 'check';
+    } else {
+      el.classList.remove('valid');
+      el.classList.add('invalid');
+      icon.textContent = 'close';
+    }
+  }
+
   document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
     const payload = {
       name: document.getElementById('name').value,
       lastName: document.getElementById('lastName').value,
-      email: document.getElementById('email').value,
-      password: document.getElementById('password').value,
+      email: email,
+      password: password,
       phoneNumber: document.getElementById('phoneNumber').value,
       birthdate: document.getElementById('birthdate').value
     };
@@ -66,8 +101,22 @@
       });
       const data = await res.json();
       if (res.ok) {
-        M.toast({html: 'Registro exitoso, por favor inicia sesión', classes: 'green'});
-        setTimeout(() => window.location.href = '/signIn', 1500);
+        M.toast({html: 'Registro exitoso. Ingresando...', classes: 'green'});
+        // Auto-login after successful registration
+        const loginRes = await fetch('/api/auth/signIn', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const loginData = await loginRes.json();
+        if (loginRes.ok) {
+          setToken(loginData.token);
+          const decoded = parseJwt(loginData.token);
+          if (decoded.roles.includes('admin')) window.location.href = '/admin/dashboard';
+          else window.location.href = '/dashboard';
+        } else {
+          window.location.href = '/signIn';
+        }
       } else {
         M.toast({html: data.message || 'Error en el registro', classes: 'red'});
       }

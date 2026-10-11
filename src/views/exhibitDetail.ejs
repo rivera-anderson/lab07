@@ -1,0 +1,130 @@
+<%- include('partials/header') %>
+<div class="elegant-container">
+  <div class="container">
+    <div class="row" style="margin-top: 30px;">
+      <div class="col s12">
+        <a href="/dashboard" style="color: var(--accent); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 30px;">
+          <i class="material-icons" style="font-size: 18px;">arrow_back</i> Volver a Exhibiciones
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 l7">
+        <div class="exhibit-detail-img" id="exhibitImage">
+          <img src="" alt="Exhibición" style="width:100%; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);">
+        </div>
+      </div>
+      <div class="col s12 l5">
+        <div class="exhibit-detail-info">
+          <span class="section-tag" id="exhibitTag"></span>
+          <h2 class="section-title" id="exhibitTitle" style="font-size: 3rem; margin-top: 10px;"></h2>
+          <p style="color: rgba(255,255,255,0.6); line-height: 1.8; font-size: 1.05rem; margin: 25px 0;" id="exhibitDesc"></p>
+          
+          <div class="specs-table">
+            <h4 style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; font-size: 1.3rem; color: rgba(255,255,255,0.5); margin-bottom: 15px;">Datos de la Exhibición</h4>
+            <table style="width: 100%;">
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px;">Periodo</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: right; color: #fff;" id="specPeriod"></td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px;">Ubicación</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: right; color: #fff;" id="specLocation"></td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px;">Antigüedad</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: right; color: #fff;" id="specAge"></td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px;">Estado</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: right; color: var(--accent);" id="specStatus"></td>
+              </tr>
+            </table>
+          </div>
+          <button class="btn btn-accent" style="width: 100%; margin-top: 30px;">Reservar Visita Guiada &nearr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const exhibits = {
+    '1': {
+      title: 'El Rey de los Tiranos',
+      tag: 'Cretácico / Sala 01',
+      image: '/images/exhibit-1.jpg',
+      desc: 'Este esqueleto completo de Tyrannosaurus Rex, descubierto en las Badlands de Montana en 1990, es uno de los especímenes más completos jamás hallados. Con una longitud de 12.3 metros y una altura de 4 metros en la cadera, este depredador ápice dominaba los ecosistemas del Cretácico tardío hace aproximadamente 68 millones de años. Su cráneo masivo albergaba dientes de hasta 30 cm capaces de triturar hueso. La pieza ha sido montada en posición de caza activa, recreando el momento justo antes de un ataque.',
+      period: 'Cretácico Tardío',
+      location: 'Pabellón Central',
+      age: '68 millones de años',
+      status: 'Exhibición Permanente'
+    },
+    '2': {
+      title: 'Fósiles Marinos Ancestrales',
+      tag: 'Jurásico / Sala 03',
+      image: '/images/exhibit-2.jpg',
+      desc: 'Una colección extraordinaria de ammonites, belemnites y otros cefalópodos fosilizados del periodo Jurásico. Estas criaturas marinas habitaron los océanos cuando los dinosaurios dominaban la tierra. Las espirales perfectamente preservadas de los ammonites revelan patrones de crecimiento que los científicos utilizan para comprender los antiguos ecosistemas oceánicos. Algunas piezas exhiben iridiscencia natural causada por la mineralización de aragonito.',
+      period: 'Jurásico Medio',
+      location: 'Salón Oceánico',
+      age: '200 millones de años',
+      status: 'Recién Incorporada'
+    },
+    '3': {
+      title: 'Salón de los Gigantes',
+      tag: 'Mesozoico / Sala 05',
+      image: '/images/exhibit-3.jpg',
+      desc: 'La sala más impresionante de nuestro museo reúne esqueletos completos de los herbívoros más grandes que jamas caminaron sobre la Tierra. Desde el Diplodocus de 27 metros de longitud hasta el Brachiosaurus con su cuello de 9 metros de altura, esta galeria permite comprender la escala verdadera de estos titanes prehistóricos. Cada esqueleto ha sido reconstruido con precisión anatómica basada en los últimos descubrimientos paleontológicos.',
+      period: 'Era Mesozoica',
+      location: 'Sala Principal',
+      age: '150 millones de años',
+      status: 'Exhibición Destacada'
+    },
+    '4': {
+      title: 'Anatomía del Depredador',
+      tag: 'Cretácico / Sala 02',
+      image: '/images/exhibit-4.jpg',
+      desc: 'Una exhibición interactiva que explora la biomecánica de los grandes carnívoros prehistóricos. Cráneos articulados de Allosaurus, Spinosaurus y Velociraptor permiten observar cómo la evolución esculpió mandíbulas capaces de generar fuerzas de mordida superiores a 3 toneladas. Modelos 3D y proyecciones holográficas complementan los fósiles originales para revelar músculos y tejidos blandos.',
+      period: 'Cretácico Tardío',
+      location: 'Laboratorio Anatómico',
+      age: '75 millones de años',
+      status: 'Exhibición Temporal'
+    },
+    '5': {
+      title: 'Megafauna de la Era de Hielo',
+      tag: 'Pleistoceno / Sala 07',
+      image: '/images/exhibit-5.jpg',
+      desc: 'Adentrate en el mundo helado del Pleistoceno y descubre a los mamíferos gigantes que convivieron con los primeros humanos. El esqueleto del Mamut Lanudo, con sus colmillos curvados de 4 metros, es la pieza central de esta sala que también alberga restos de Megatherium (perezoso gigante), Smilodon (tigre dientes de sable) y Glyptodon (armadillo gigante).',
+      period: 'Pleistoceno',
+      location: 'Ala Glaciar',
+      age: '40,000 años',
+      status: 'Exhibición Permanente'
+    },
+    '6': {
+      title: 'Atrapados en Ámbar',
+      tag: 'Cenozoico / Sala 09',
+      image: '/images/exhibit-6.jpg',
+      desc: 'La colección más delicada del museo presenta insectos, arácnidos y fragmentos botánicos perfectamente preservados dentro de resina fósil. Cada pieza de ámbar es una cápsula del tiempo que permite observar organismos con un nivel de detalle imposible en otros tipos de fosilización. Bajo microscopios de alta resolución, los visitantes pueden explorar alas de libélulas, antenas de hormigas y pétalos de flores de hace 50 millones de años.',
+      period: 'Era Cenozoica',
+      location: 'Galería de Resinas',
+      age: '50 millones de años',
+      status: 'Exhibición Exclusiva'
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    checkAuth(['user', 'admin']);
+    const id = '<%= exhibitId %>';
+    const exhibit = exhibits[id];
+    if (exhibit) {
+      document.getElementById('exhibitTitle').textContent = exhibit.title;
+      document.getElementById('exhibitTag').textContent = exhibit.tag;
+      document.getElementById('exhibitImage').querySelector('img').src = exhibit.image;
+      document.getElementById('exhibitDesc').textContent = exhibit.desc;
+      document.getElementById('specPeriod').textContent = exhibit.period;
+      document.getElementById('specLocation').textContent = exhibit.location;
+      document.getElementById('specAge').textContent = exhibit.age;
+      document.getElementById('specStatus').textContent = exhibit.status;
+    }
+  });
+</script>
+<%- include('partials/footer') %>

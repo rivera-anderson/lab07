@@ -657,3 +657,83 @@ table.elegant-table tbody tr:hover {
 /* Materialize overrides */
 .toast { border-radius: 8px !important; }
 input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); }
+
+/* Password Hints */
+.password-hints {
+  margin-top: 10px;
+  padding: 12px 15px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.password-hints .hint-title {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 0 0 8px 0;
+}
+
+.password-hints ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.password-hints li {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.8rem;
+  padding: 3px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.password-hints li i {
+  font-size: 14px !important;
+}
+
+.password-hints li.valid {
+  color: #4ade80;
+}
+
+.password-hints li.valid i {
+  color: #4ade80;
+}
+
+.password-hints li.invalid {
+  color: rgba(255,255,255,0.35);
+}
+
+.password-hints li.invalid i {
+  color: #ef4444;
+}
+
+/* Exhibit Detail Page */
+.exhibit-detail-img {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.exhibit-detail-info {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  padding-left: 20px;
+}
+
+.specs-table {
+  margin-top: 30px;
+  padding: 25px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+
+
+/* Fix Layout Grid */
+.exhibits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  width: 100%;
+}
