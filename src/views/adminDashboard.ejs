@@ -1,21 +1,26 @@
 <%- include('partials/header') %>
-<div class="elegant-container container">
-  <div class="row">
-    <div class="col s12">
-      <h2 class="elegant-title">Panel del <span>Curador</span></h2>
-      <table class="elegant-table responsive-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th>Fecha Registro</th>
-          </tr>
-        </thead>
-        <tbody id="usersTableBody">
-        </tbody>
-      </table>
+<div class="elegant-container">
+  <div class="container">
+    <div class="section-header" style="text-align: left;">
+      <span class="section-tag">Panel de Control</span>
+      <h2 class="section-title">Panel del<br><span class="accent">Curador</span></h2>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <table class="elegant-table responsive-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Roles</th>
+              <th>Fecha Registro</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -38,7 +43,7 @@
               <td>${u._id}</td>
               <td>${u.name} ${u.lastName || ''}</td>
               <td>${u.email}</td>
-              <td>${roles}</td>
+              <td><span class="exhibit-tag">${roles}</span></td>
               <td>${date}</td>
             `;
             tbody.appendChild(tr);

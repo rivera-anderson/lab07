@@ -1,10 +1,13 @@
 <%- include('partials/header') %>
-<div class="elegant-container container">
-  <div class="row">
-    <div class="col s12 m8 offset-m2">
-      <h2 class="elegant-title center-align">Mi <span>Perfil</span></h2>
-      <div class="elegant-light-card">
-        <div class="card-content">
+<div class="elegant-container">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m8 offset-m2">
+        <div class="section-header" style="text-align: center;">
+          <span class="section-tag">Tu Cuenta</span>
+          <h2 class="section-title">Mi <span class="accent">Perfil</span></h2>
+        </div>
+        <div class="elegant-light-card">
           <form id="profileForm">
             <div class="row">
               <div class="input-field col s6">
@@ -42,7 +45,7 @@
                 <label class="active" for="address">Dirección</label>
               </div>
             </div>
-            <button class="btn btn-museum w-100" type="submit" style="width: 100%; margin-top: 20px;">Actualizar Perfil &rarr;</button>
+            <button class="btn btn-accent w-100" type="submit" style="width: 100%; margin-top: 25px;">Actualizar Perfil &rarr;</button>
           </form>
         </div>
       </div>
@@ -68,11 +71,7 @@
           }
           document.getElementById('url_profile').value = data.url_profile || '';
           document.getElementById('address').value = data.address || '';
-          
-          // Fix label overlap bug
-          setTimeout(() => {
-            M.updateTextFields();
-          }, 100);
+          setTimeout(() => { M.updateTextFields(); }, 100);
         }
       } catch (e) {
         M.toast({html: 'Error cargando perfil', classes: 'red'});

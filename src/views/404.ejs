@@ -1,17 +1,10 @@
 <%- include('partials/header') %>
-<div class="elegant-container container">
-  <div class="row">
-    <div class="col s12 m8 offset-m2 l6 offset-l3" style="margin-top: 100px;">
-      <div class="elegant-light-card center-align">
-        <i class="material-icons" style="font-size: 80px; color: var(--text-gray); margin-bottom: 20px;">map</i>
-        <h2 class="elegant-title" style="margin-top: 0; font-size: 2.5rem;">404</h2>
-        <h4 style="font-family: 'Playfair Display', serif; color: var(--primary-color); font-weight: 600; margin-bottom: 20px;">Sala No Encontrada</h4>
-        <p style="font-size: 1.1rem; color: var(--text-gray); margin-bottom: 40px; line-height: 1.6;">
-          Parece que te has perdido en los pasillos del museo. La exhibición que buscas no existe en nuestros archivos o ha sido reubicada.
-        </p>
-        <a href="/" class="btn btn-museum">Volver al Inicio</a>
-      </div>
-    </div>
+<div class="error-page">
+  <div class="error-card">
+    <h2 class="error-code">404</h2>
+    <h3 class="error-title">Sala No Encontrada</h3>
+    <p class="error-desc">Te has perdido en los pasillos del museo. La exhibición que buscas no existe en nuestros archivos o ha sido reubicada a otra sección.</p>
+    <a href="/" class="btn btn-accent">Volver al Inicio &rarr;</a>
   </div>
 </div>
 <%- include('partials/footer') %>
